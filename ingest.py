@@ -10,6 +10,8 @@ import sys
 
 es_server = "http://localhost:9200"
 
+num_args = len(sys.argv)
+
 # DIRECTORY
 if num_args > 1: 
     directory = str(sys.argv[1])
@@ -70,4 +72,5 @@ for filename in os.listdir(directory):
             'id': id,
             'filename': f, 
             'content': parsed["content"]
-            })
+            },
+            request_timeout=600)

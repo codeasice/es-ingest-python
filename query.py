@@ -6,11 +6,11 @@ tika.initVM()
 from tika import parser
 import re
 import sys
+import stopit
 
+timeout_seconds = 10
 # USAGE: query.py [keyword] [elasticsearch index]
-
 es_server = "http://localhost:9200"
-
 num_args = len(sys.argv)
 
 # KEYWORD
@@ -24,6 +24,13 @@ if num_args > 2:
     es_index = str(sys.argv[2])
 else: 
     es_index = "es-ingest"
+
+def forever_search(keyword, text):
+    # Grab n words before and after the keyword
+    n = 4
+    word = r"\W*([\w]+)"
+    for res in re.findall(r'{}\W*{}{}'.format(word*n,keyword,word*n), text, re.IGNORECASE):
+        print(f"{' '.join(res[:n])} {keyword} {' '.join(res[n:])}")
 
 print("Connecting to Elasticsearch")
 client = Elasticsearch(hosts=[es_server],verify_certs=False)
@@ -46,9 +53,8 @@ for hit in resp['hits']['hits']:
     text = hit["_source"]["content"]
     filename = hit["_source"]["filename"]
     print (f"----------- Searching doc ({i} / {num_results})[{id}] - {filename}")
-    
-    # Grab n words before and after the keyword
-    n = 5
-    word = r"\W*([\w]+)"
-    for res in re.findall(r'{}\W*{}{}'.format(word*n,keyword,word*n), text, re.IGNORECASE):
-        print(f"{' '.join(res[:n])} {keyword} {' '.join(res[n:])}")
+
+    if filename == r"C:\Users\clambert\Downloads\OneDrive_1_11-8-2022\periscope Technical Proposal response.pdf":
+        print("Skipping file")
+    else: 
+        forever_search(keyword, text)

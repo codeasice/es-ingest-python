@@ -14,6 +14,8 @@ Searches for the keyword in the specified index and returns all matches includin
 # REFERENCE NOTES
 https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
 
+http://localhost:9200/_aliases?pretty=true
+
 C:\Users\clambert>curl -X PUT "localhost:9200/es-index?pretty"
 {
   "acknowledged" : true,
@@ -38,3 +40,15 @@ curl -X PUT "localhost:9200/es-index?pretty" -H 'Content-Type: application/json'
 '
 
 http://localhost:9200/es-ingest/_search?q=browser
+
+docker-compose ERROR: bootstrap checks failed | max > virtual memory areas vm.max_map_count [65530] is too low, increase to > at least [262144]
+open power shell 
+wsl.exe -u root
+sysctl -w vm.max_map_count=262144
+exit
+
+docker exec -u 0 -it es01 bash
+apt-get update
+apt-get install vim
+vim /usr/share/elasticsearch/config/elasticsearch.yml
+:colorscheme desert
