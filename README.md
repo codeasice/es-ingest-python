@@ -11,6 +11,14 @@ USAGE: query.py [keyword] [elasticsearch index]
 
 Searches for the keyword in the specified index and returns all matches including a few words before and after the keyword
 
+# FEATURES
+## Settings
+settings.json contains several settings that can be configured
+
+## Skip Files
+"filenames_to_skip" is an array in the settings.json files can contain a list of files to skip (paths are stripped if they are included)
+This can be used to ignore irrelevant or bad files (Sometimes regex gets hung due to well-known bugs)
+
 # REFERENCE NOTES
 https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
 
@@ -52,3 +60,5 @@ apt-get update
 apt-get install vim
 vim /usr/share/elasticsearch/config/elasticsearch.yml
 :colorscheme desert
+
+ docker run -e ES_JAVA_OPTS="-Xms1g -Xmx1g" --name es02 -p 9201:9200  -p 9300:9300 -it docker.elastic.co/elasticsearch/elasticsearch:8.5.1

@@ -3,7 +3,7 @@
   },
   "mappings": {
     "properties": {
-      "content": { "type": "text" }
+      "content": { "type": "text" },
       "body": { "type": "text" }
     }
   }

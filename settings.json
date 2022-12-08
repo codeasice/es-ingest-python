@@ -1,0 +1,7 @@
+{
+    "es_server": "http://localhost:9200",
+    "max_documents": 1000,
+    "num_surrounding_words": 4,
+    "filenames_to_skip": [
+    ]
+}
